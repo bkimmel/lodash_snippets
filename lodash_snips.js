@@ -60,7 +60,24 @@ var hiRight = lodash.partialRight(greet, 'curly');
 console.log(hiRight('hi'));
 console.log(hiRight('hi', 'larry'));
 
-//UTILS
+//COLLECTIONS
+
+//_.map *callback way : run the collection (1st arg) through the callback, and return the resulting array
+var mapresult = lodash.map(food, function(fooditem){
+	return fooditem.organic && (fooditem.type == "fruit") && fooditem.name;
+});
+
+console.log('\nmapresult:\n' + JSON.stringify(mapresult) + '\n');
+
+//_.map the 'pluck' way
+mapresult = lodash.map(food, "name");
+console.log('\nmapresult, pluck:\n' + JSON.stringify(mapresult) + '\n');
+
+//_.map the 'json query' way
+mapresult = lodash.map(food, {"type": "vegetable"});
+console.log('\nmapresult, json query:\n' + JSON.stringify(mapresult) + '\n');
+
+//UTILITIES
 
 //_.times : call a function n times and return results in array
 var diceRolls = lodash.times(3, (function(){return lodash.random(1, 6);}));
