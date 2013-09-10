@@ -15,6 +15,7 @@ var some_object = {
 };
 var food = [
   { 'name': 'apple',  'type': 'fruit', 'organic': true },
+  { 'name': 'cucumber',   'type': 'vegetable', 'organic': false },
   { 'name': 'banana', 'type': 'fruit', 'organic': true },
   { 'name': 'beet',   'type': 'vegetable', 'organic': true },
   { 'name': 'orange', 'type': 'fruit', 'organic': false }
@@ -77,6 +78,27 @@ console.log('\nmapresult, pluck:\n' + JSON.stringify(mapresult) + '\n');
 mapresult = lodash.map(food, {"type": "vegetable"});
 console.log('\nmapresult, json query:\n' + JSON.stringify(mapresult) + '\n');
 
+//OBJECTS
+
+//transform is like reduce, but it mutates the accumulator along the way
+var tranformresult = lodash.transform(food, function(acc, val) {
+	var ins_type = val.type;
+	var ins_name = val.name;
+	if (!(acc[ins_type]))
+	{
+		acc[ins_type] = [];
+	}
+	
+	acc[ins_type].push(ins_name);
+	
+}, {});
+
+console.log('_transform:\n' + JSON.stringify(tranformresult));
+
+//shortcut for above transform would be _groupBy
+var groupByResult = lodash.groupBy(food, "type");
+console.log('_groupBy:\n' + JSON.stringify(groupByResult));
+
 //UTILITIES
 
 //_.times : call a function n times and return results in array
@@ -84,3 +106,21 @@ var diceRolls = lodash.times(3, (function(){return lodash.random(1, 6);}));
 console.log('\n_times:\n' + JSON.stringify(diceRolls) + '\n');
 
 console.log(JSON.stringify(t));
+
+//_.mixin : make your own lodash stuff
+lodash.mixin({
+	"average": function(inarr){
+		return lodash.isArray(inarr) && (function(_i){
+			var x = 0;
+			for (var i = 0, lim = _i.length; i < lim; i++)
+			{
+				x = x + _i[i];
+			}
+			console.log('x: ' + x + ', i_len: ' + _i.length)
+			return (_i.length != 0 || 0) && (x / _i.length);
+		})(inarr)
+	}
+});
+
+var avg = lodash.average([2,3,4, 4, 0, 3, 0, 0]);
+console.log("avg:\n" + avg);
