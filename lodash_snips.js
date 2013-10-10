@@ -124,3 +124,15 @@ lodash.mixin({
 
 var avg = lodash.average([2,3,4, 4, 0, 3, 0, 0]);
 console.log("avg:\n" + avg);
+
+//templating
+var temptext = '<div class="fac"><span class="lastname"><%= lastname %></span><span class="fname"><%= firstname %></span>';
+temptext += '<span class="tp">Type: <%= type %></span><span class="em">Email: <%= email %></span>';
+temptext += '<span class="car">Career Status: <%= careerstatus %></span><span class="gender">Gender: <%= gender %></span>';
+temptext += '\n<span class="schoolname"><%= schoolname %></span>';
+temptext += '\n<span class="indcst">ind_key: <%= ind_cst %></span><span class="orgcst">org_key: <%= org_cst %></span>';
+temptext += '</div>';
+
+var compiled = lo_.template(temptext);
+
+// compiled(e) === your templated html
