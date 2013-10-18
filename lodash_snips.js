@@ -1,5 +1,5 @@
 var lodash = require("lodash");
-var should = require("should");
+var should = require("./node_modules/should/lib/should.js");
 
 var int_array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 var falsy_array = ["hello", false, NaN, undefined, 0, null, false, "world"];
@@ -133,6 +133,13 @@ temptext += '\n<span class="schoolname"><%= schoolname %></span>';
 temptext += '\n<span class="indcst">ind_key: <%= ind_cst %></span><span class="orgcst">org_key: <%= org_cst %></span>';
 temptext += '</div>';
 
-var compiled = lo_.template(temptext);
+var compiled = lodash.template(temptext);
 
 // compiled(e) === your templated html
+
+var unrestricted = function(val){console.log("unrestricted"); return "backatcha: " + val;};
+
+var once = lodash.once(unrestricted);
+console.log(once("bam!"));
+//unrestricted fires only once and returns the same thing no matter what we pass as args:
+console.log(once("boom!")); //=> logs "backatcha: bam!"
